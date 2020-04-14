@@ -285,6 +285,12 @@ def control_panel():
     all_users = User.query.all()
     return render_template('control_panel.html', users=all_users, pageTitle='My Flask App Control Panel')
 
+@app.route('/admin')
+@requires_access_level(ACCESS['admin'])
+def admin_responsibilities():
+    return render_template('admin.html', pageTitle="Admin Responsibilities")
+
+
 # user details & update
 @app.route('/user_detail/<int:user_id>', methods=['GET','POST'])
 @requires_access_level(ACCESS['admin'])
