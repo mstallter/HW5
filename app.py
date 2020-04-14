@@ -232,6 +232,10 @@ def logout():
     flash('You have successfully logged out.', 'success')
     return redirect(url_for('index'))
 
+#guest.html
+@app.route('/guest')
+def amIuser():
+    return render_template('guest.html', pageTitle='Am I a user?')
 
 ################ GUEST ACCESS FUNCTIONALITY OR GREATER ###################
 
@@ -264,6 +268,12 @@ def account():
 @requires_access_level(ACCESS['user'])
 def dashboard():
     return render_template('dashboard.html', pageTitle='My Flask App Dashboard')
+
+#Become Admin
+@app.route('/become_admin')
+@requires_access_level(ACCESS['user'])
+def become_admin():
+    return render_template('become_admin.html', pageTitle="Become an Admin")
 
 
 ################ ADMIN ACCESS FUNCTIONALITY ###################
