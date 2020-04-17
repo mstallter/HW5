@@ -8,21 +8,21 @@ from werkzeug.urls import url_parse
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 from functools import wraps
 import pymysql
-#import os
-import secrets
+import os
+#import secrets
 
 
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 
 # Open database connection
-#dbhost = os.environ.get('DBHOST')
-#dbuser = os.environ.get('DBUSER')
-#dbpass = os.environ.get('DBPASS')
-#dbname = os.environ.get('DBNAME')
+dbhost = os.environ.get('DBHOST')
+dbuser = os.environ.get('DBUSER')
+dbpass = os.environ.get('DBPASS')
+dbname = os.environ.get('DBNAME')
 
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
-#db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
+db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
 
 app = Flask(__name__)
 
