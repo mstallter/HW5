@@ -8,21 +8,21 @@ from werkzeug.urls import url_parse
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user, login_required
 from functools import wraps
 import pymysql
-import os
-#import secrets
+#import os
+import secrets
 
 
-#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
+conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 
 # Open database connection
-dbhost = os.environ.get('DBHOST')
-dbuser = os.environ.get('DBUSER')
-dbpass = os.environ.get('DBPASS')
-dbname = os.environ.get('DBNAME')
+#dbhost = os.environ.get('DBHOST')
+#dbuser = os.environ.get('DBUSER')
+#dbpass = os.environ.get('DBPASS')
+#dbname = os.environ.get('DBNAME')
 
-conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
+#conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 
-db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
+#db = pymysql.connect(dbhost, dbuser, dbpass, dbname)
 
 app = Flask(__name__)
 
@@ -137,6 +137,9 @@ class User(UserMixin, db.Model):
 
     def is_user(self):
         return self.access == ACCESS['user']
+    
+    def is_guest(self):
+        return self.access == ACCESS['guest']
 
     def allowed(self, access_level):
         return self.access >= access_level
@@ -234,10 +237,7 @@ def logout():
     flash('You have successfully logged out.', 'success')
     return redirect(url_for('index'))
 
-#guest.html
-@app.route('/guest')
-def amIuser():
-    return render_template('guest.html', pageTitle='Am I a user?')
+
 
 ################ GUEST ACCESS FUNCTIONALITY OR GREATER ###################
 
@@ -261,7 +261,10 @@ def account():
 
     return render_template('account_detail.html', form=form, pageTitle='Your Account')
 
-
+#guest.html
+@app.route('/guest')
+def amIuser():
+    return render_template('guest.html', pageTitle='Am I a user?')
 
 ################ USER ACCESS FUNCTIONALITY OR GREATER ###################
 
